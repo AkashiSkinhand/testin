@@ -8,14 +8,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 
   <!-- Looma AI Widget -->
-  <script>
-    (function(d) {
-      var s = d.createElement('script');
-      s.defer = true;
-      s.src = 'https://widget.looma.chat/loader.js?token=6e9803ec1b6a9b345678f6e3fc0ca218'; 
-      if (d.head) d.head.appendChild(s);
-    })(document);
-  </script>
+<script>
+  (function(d) {
+    var s = d.createElement('script');
+    s.defer = true;
+    s.src = 'https://widget.looma.chat/loader.js?token=ВАШ_ТОКЕН_ЗДЕСЬ';
+    s.onload = function() {
+      console.log('%cLooma script loaded successfully', 'color:#00ff00');
+    };
+    if (d.head) d.head.appendChild(s);
+  })(document);
+</script>
 
   <style>
     :root {
@@ -121,6 +124,19 @@
       border: 1px solid rgba(0, 240, 255, 0.3) !important;
       background: #111 !important;
     }
+    /* Принудительная видимость Looma */
+.looma-widget-trigger {
+  z-index: 9999 !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: 50% !important;
+}
+
+.looma-chat-window {
+  z-index: 10000 !important;
+}
   </style>
 </head>
 <body>
@@ -408,6 +424,14 @@
         }
       }, 45000);
     };
-  </script>
+   // Принудительная инициализация Looma
+setTimeout(() => {
+  if (typeof Looma !== 'undefined') {
+    console.log('Looma initialized');
+  } else {
+    console.warn('Looma not found after 2 seconds');
+  }
+}, 2000);
+   </script>
 </body>
 </html>
