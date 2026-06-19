@@ -737,11 +737,13 @@
   </script>
   <!-- Looma AI Assistant Widget -->
   <script>
+    var loomaToken = '15af3244d1bfdf912fca27d675f554e5';
+
     function loadLoomaWidget() {
       if (document.querySelector('script[src*="widget.looma.chat/loader.js"]')) return;
       var s = document.createElement('script');
       s.defer = true;
-      s.src = 'https://widget.looma.chat/loader.js?token=15af3244d1bfdf912fca27d675f554e5';
+      s.src = 'https://widget.looma.chat/loader.js?token=' + loomaToken;
       if (document.head) document.head.appendChild(s);
     }
 
@@ -756,55 +758,124 @@
       }, 2800);
     }
 
-    function openLoomaWidget() {
-      loadLoomaWidget();
-      showAiLauncherNote('Открываю ассистента...');
+    function getDeepElements(root) {
+      var items = [];
+      var nodes = [];
 
-      var openers = [
-        function() { return window.Looma && window.Looma.open && window.Looma.open(); },
-        function() { return window.looma && window.looma.open && window.looma.open(); },
-        function() { return window.LoomaWidget && window.LoomaWidget.open && window.LoomaWidget.open(); },
-        function() { return window.loomaWidget && window.loomaWidget.open && window.loomaWidget.open(); }
+      try {
+        nodes = Array.from((root || document).querySelectorAll('*'));
+      } catch (e) {}
+
+      nodes.forEach(function(node) {
+        items.push(node);
+        if (node.shadowRoot) {
+          items = items.concat(getDeepElements(node.shadowRoot));
+        }
+      });
+
+      return items;
+    }
+
+    function callLoomaMethod() {
+      var owners = [
+        window.Looma,
+        window.looma,
+        window.LoomaWidget,
+        window.loomaWidget,
+        window.LoomaChat,
+        window.loomaChat,
+        window.$looma,
+        window.__looma
       ];
+      var methods = ['open', 'show', 'toggle', 'maximize', 'start', 'init'];
 
-      for (var i = 0; i < openers.length; i++) {
-        try {
-          if (openers[i]()) return true;
-        } catch (e) {}
+      for (var i = 0; i < owners.length; i++) {
+        for (var j = 0; j < methods.length; j++) {
+          try {
+            if (owners[i] && typeof owners[i][methods[j]] === 'function') {
+              owners[i][methods[j]]();
+              return true;
+            }
+          } catch (e) {}
+        }
       }
 
-      var candidates = Array.from(document.querySelectorAll('button, [role="button"], iframe, [class*="looma"], [id*="looma"]'));
-      var target = candidates.find(function(el) {
+      return false;
+    }
+
+    function clickLoomaElement() {
+      var launcher = document.getElementById('aiLauncher');
+      var elements = getDeepElements(document);
+      var clickable = elements.filter(function(el) {
+        if (el === launcher || launcher.contains(el)) return false;
+
         var text = (el.textContent || '').toLowerCase();
         var id = (el.id || '').toLowerCase();
         var cls = (el.className || '').toString().toLowerCase();
         var src = (el.getAttribute && el.getAttribute('src') || '').toLowerCase();
-        return id.includes('looma') || cls.includes('looma') || src.includes('looma') || text.includes('chat') || text.includes('чат');
+        var label = (el.getAttribute && (el.getAttribute('aria-label') || el.getAttribute('title') || '') || '').toLowerCase();
+        var role = (el.getAttribute && el.getAttribute('role') || '').toLowerCase();
+
+        var looksLikeLooma = id.includes('looma') || cls.includes('looma') || src.includes('looma') || label.includes('looma');
+        var looksLikeChat = text.includes('chat') || text.includes('чат') || label.includes('chat') || label.includes('чат') || label.includes('message');
+        var canClick = el.tagName === 'BUTTON' || el.tagName === 'A' || role === 'button' || typeof el.onclick === 'function';
+
+        return (looksLikeLooma || looksLikeChat) && (canClick || el.tagName === 'IFRAME');
       });
 
-      if (target && target !== document.getElementById('aiLauncher')) {
-        if (target.tagName === 'IFRAME') {
-          target.style.display = 'block';
-          target.style.opacity = '1';
-          target.style.visibility = 'visible';
-        } else {
-          target.click();
-        }
-        return true;
+      var target = clickable.find(function(el) {
+        return el.tagName !== 'IFRAME';
+      }) || clickable[0];
+
+      if (!target) return false;
+
+      if (target.tagName === 'IFRAME') {
+        target.style.display = 'block';
+        target.style.opacity = '1';
+        target.style.visibility = 'visible';
+      } else {
+        target.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
       }
 
+      return true;
+    }
+
+    function notifyLoomaFrames() {
+      var frames = Array.from(document.querySelectorAll('iframe[src*="looma"]'));
+      frames.forEach(function(frame) {
+        try {
+          frame.contentWindow.postMessage({ type: 'open' }, '*');
+          frame.contentWindow.postMessage({ event: 'open' }, '*');
+          frame.contentWindow.postMessage('open', '*');
+        } catch (e) {}
+      });
+
+      return frames.length > 0;
+    }
+
+    function openLoomaWidget() {
+      loadLoomaWidget();
+      if (callLoomaMethod()) return true;
+      if (clickLoomaElement()) return true;
+      if (notifyLoomaFrames()) return true;
       return false;
     }
 
     loadLoomaWidget();
 
     document.getElementById('aiLauncher').addEventListener('click', function() {
-      if (openLoomaWidget()) return;
-      setTimeout(function() {
-        if (!openLoomaWidget()) {
-          showAiLauncherNote('Ассистент загружается. Если чат не открылся, проверь интернет или блокировщик рекламы.');
-        }
-      }, 1200);
+      showAiLauncherNote('Открываю ассистента...');
+
+      var delays = [0, 350, 900, 1600, 2600, 4000];
+      delays.forEach(function(delay, index) {
+        setTimeout(function() {
+          if (openLoomaWidget()) {
+            showAiLauncherNote('Ассистент открыт.');
+          } else if (index === delays.length - 1) {
+            showAiLauncherNote('Looma установлена, но чат не дал открыть себя внешней кнопкой. Проверь настройки отображения виджета в Looma.');
+          }
+        }, delay);
+      });
     });
   </script>
   <!-- End Looma AI Assistant Widget -->
