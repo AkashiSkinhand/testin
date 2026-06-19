@@ -6,31 +6,12 @@
   <title>Курс «Блядо» PRO v2.2</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
-
-  <!-- Looma AI Widget -->
-<script>
-  (function(d) {
-    var s = d.createElement('script');
-    s.defer = true;
-    s.src = 'https://widget.looma.chat/loader.js?token=6e9803ec1b6a9b345678f6e3fc0ca218';
-    s.onload = function() {
-      console.log('%cLooma script loaded successfully', 'color:#00ff00');
-    };
-    if (d.head) d.head.appendChild(s);
-  })(document);
-</script>
-
   <style>
     :root {
       --primary: #00f0ff;
       --accent: #ff00aa;
       --dark: #0a0a0a;
       --gray: #1a1a1a;
-      
-      /* Looma настройки */
-      --looma-primary: #00f0ff;
-      --looma-bg: #111;
-      --looma-text: #fff;
     }
     
     * {
@@ -39,16 +20,27 @@
       box-sizing: border-box;
     }
     
-    .chart-section { padding: 60px 20px; }
-    .chart-box {
-      background: rgba(26, 26, 26, 0.7);
-      border: 1px solid rgba(0, 240, 255, 0.15);
-      border-radius: 24px;
-      overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0, 240, 255, 0.1);
-    }
-    .chart-title { text-align: center; font-size: 2rem; margin-bottom: 30px; }
-    .tv-chart { height: 450px; }
+    .chart-section {
+  padding: 60px 20px;
+}
+
+.chart-box {
+  background: rgba(26, 26, 26, 0.7);
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 240, 255, 0.1);
+}
+
+.chart-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+.tv-chart {
+  height: 450px;
+}
     
     body {
       font-family: 'Inter', Arial, sans-serif;
@@ -58,9 +50,23 @@
       overflow-x: hidden;
     }
     
-    .hero { min-height: 100vh; display: flex; align-items: center; position: relative; padding: 120px 20px 80px; }
-    .container { max-width: 1100px; margin: 0 auto; width: 100%; }
-    .glow { text-shadow: 0 0 30px var(--primary); }
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 120px 20px 80px;
+    }
+    
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    
+    .glow {
+      text-shadow: 0 0 30px var(--primary);
+    }
     
     h1 {
       font-family: 'Space Grotesk', sans-serif;
@@ -73,18 +79,42 @@
       -webkit-text-fill-color: transparent;
     }
     
-    .subtitle { font-size: 1.35rem; max-width: 600px; margin: 0 auto 2rem; opacity: 0.9; line-height: 1.4; }
-    .price { font-size: 2.2rem; font-weight: 700; color: var(--primary); margin: 1.5rem 0; }
-    .old-price { text-decoration: line-through; color: #666; font-size: 1.4rem; }
+    .subtitle {
+      font-size: 1.35rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      opacity: 0.9;
+      line-height: 1.4;
+    }
+    
+    .price {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 1.5rem 0;
+    }
+    
+    .old-price {
+      text-decoration: line-through;
+      color: #666;
+      font-size: 1.4rem;
+    }
     
     .btn {
-      display: inline-flex; align-items: center; gap: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
       background: linear-gradient(90deg, var(--primary), #00aacc);
-      color: #000; padding: 1.1em 2.4em; border-radius: 9999px;
-      text-decoration: none; font-weight: 700; font-size: 1.15rem;
+      color: #000;
+      padding: 1.1em 2.4em;
+      border-radius: 9999px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.15rem;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: 0 10px 30px rgba(0, 240, 255, 0.3);
-      position: relative; overflow: hidden;
+      position: relative;
+      overflow: hidden;
     }
     
     .btn:hover {
@@ -92,51 +122,258 @@
       box-shadow: 0 20px 40px rgba(0, 240, 255, 0.5);
     }
     
-    .section { padding: 100px 20px; }
-    .features { background: rgba(10, 10, 10, 0.8); border-top: 1px solid rgba(0, 240, 255, 0.1); }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
-    .card { background: rgba(26, 26, 26, 0.7); border-radius: 20px; padding: 2rem; border: 1px solid rgba(0, 240, 255, 0.15); transition: all 0.4s ease; }
-    .card:hover { transform: translateY(-15px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(0, 240, 255, 0.15); }
-    .card i { font-size: 2.8rem; margin-bottom: 1.5rem; background: linear-gradient(45deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .testimonials { background: linear-gradient(135deg, #1a0033, #0a0a0a); }
-    .testimonial { background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 20px; border-left: 5px solid var(--primary); }
-    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,10,10,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,240,255,0.1); padding: 1rem 0; }
-    .nav-content { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
-    .logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--primary); }
-    .modal { position: fixed; top: 0; right: -420px; width: 380px; height: 100vh; background: #111; padding: 30px; transition: right 0.5s cubic-bezier(0.32, 0.72, 0, 1); box-shadow: -10px 0 30px rgba(0,0,0,0.6); z-index: 2000; overflow-y: auto; }
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: skewX(-25deg);
+      animation: shine 4s infinite;
+    }
+    
+    @keyframes shine {
+      0% { transform: translateX(-150%) skewX(-25deg); }
+      20% { transform: translateX(300%) skewX(-25deg); }
+    }
+    
+    .section {
+      padding: 100px 20px;
+    }
+    
+    .features {
+      background: rgba(10, 10, 10, 0.8);
+      border-top: 1px solid rgba(0, 240, 255, 0.1);
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    
+    .card {
+      background: rgba(26, 26, 26, 0.7);
+      border-radius: 20px;
+      padding: 2rem;
+      border: 1px solid rgba(0, 240, 255, 0.15);
+      transition: all 0.4s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-15px);
+      border-color: var(--primary);
+      box-shadow: 0 20px 40px rgba(0, 240, 255, 0.15);
+    }
+    
+    .card i {
+      font-size: 2.8rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(45deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .testimonials {
+      background: linear-gradient(135deg, #1a0033, #0a0a0a);
+    }
+    
+    .testimonial {
+      background: rgba(255,255,255,0.05);
+      padding: 2rem;
+      border-radius: 20px;
+      border-left: 5px solid var(--primary);
+    }
+    
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,240,255,0.1);
+      padding: 1rem 0;
+    }
+    
+    .nav-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+    
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .modal {
+      position: fixed;
+      top: 0; right: -420px;
+      width: 380px;
+      height: 100vh;
+      background: #111;
+      padding: 30px;
+      transition: right 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+      box-shadow: -10px 0 30px rgba(0,0,0,0.6);
+      z-index: 2000;
+      overflow-y: auto;
+    }
+    
     .modal.open { right: 0; }
-    .floating-elements { position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; overflow: hidden; }
-    .coin { position: absolute; font-size: 2.5rem; opacity: 0.15; animation: float 25s linear infinite; }
-    @keyframes float { 0% { transform: translateY(100vh) rotate(0deg); } 100% { transform: translateY(-100vh) rotate(720deg); } }
+    
+    .floating-elements {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    
+    .coin {
+      position: absolute;
+      font-size: 2.5rem;
+      opacity: 0.15;
+      animation: float 25s linear infinite;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); }
+      100% { transform: translateY(-100vh) rotate(720deg); }
+    }
+    /* Looma AI assistant: styled to match the neon course design */
+    iframe[src*="looma.chat"],
+    iframe[src*="widget.looma.chat"],
+    [id*="looma"],
+    [class*="looma"] {
+      font-family: 'Inter', Arial, sans-serif !important;
+    }
 
-    /* Кастомизация Looma AI */
-    .looma-widget-trigger {
-      background: linear-gradient(90deg, var(--primary), #00aacc) !important;
-      box-shadow: 0 10px 30px rgba(0, 240, 255, 0.5) !important;
-      border: 2px solid rgba(255,255,255,0.15) !important;
+    iframe[src*="looma.chat"],
+    iframe[src*="widget.looma.chat"] {
+      border-radius: 22px !important;
+      filter: drop-shadow(0 18px 36px rgba(0, 240, 255, 0.22)) drop-shadow(0 0 18px rgba(255, 0, 170, 0.16));
     }
-    .looma-widget-trigger:hover {
-      transform: scale(1.1) !important;
-      box-shadow: 0 20px 45px rgba(0, 240, 255, 0.6) !important;
-    }
-    .looma-chat-window, .looma-chat-container {
-      border-radius: 20px !important;
-      border: 1px solid rgba(0, 240, 255, 0.3) !important;
-      background: #111 !important;
-    }
-    /* Принудительная видимость Looma */
-.looma-widget-trigger {
-  z-index: 9999 !important;
-  bottom: 20px !important;
-  right: 20px !important;
-  width: 60px !important;
-  height: 60px !important;
-  border-radius: 50% !important;
-}
 
-.looma-chat-window {
-  z-index: 10000 !important;
-}
+    [id*="looma"] button,
+    [class*="looma"] button,
+    [id*="looma"] [role="button"],
+    [class*="looma"] [role="button"] {
+      border: 1px solid rgba(0, 240, 255, 0.45) !important;
+      box-shadow: 0 12px 34px rgba(0, 240, 255, 0.24), 0 0 22px rgba(255, 0, 170, 0.16) !important;
+    }
+
+    @media (max-width: 640px) {
+      iframe[src*="looma.chat"],
+      iframe[src*="widget.looma.chat"] {
+        max-width: calc(100vw - 24px) !important;
+        max-height: calc(100vh - 24px) !important;
+        border-radius: 18px !important;
+      }
+    }
+
+    .ai-launcher {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 2100;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 62px;
+      padding: 0 22px;
+      border: 1px solid rgba(0, 240, 255, 0.48);
+      border-radius: 9999px;
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.95), rgba(255, 0, 170, 0.9));
+      color: #050505;
+      font: 800 1rem/1 'Inter', Arial, sans-serif;
+      cursor: pointer;
+      box-shadow: 0 18px 42px rgba(0, 240, 255, 0.28), 0 0 28px rgba(255, 0, 170, 0.24);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .ai-launcher:hover {
+      transform: translateY(-5px) scale(1.03);
+      box-shadow: 0 24px 54px rgba(0, 240, 255, 0.4), 0 0 38px rgba(255, 0, 170, 0.34);
+    }
+
+    .ai-launcher__icon {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.78);
+      color: var(--primary);
+      box-shadow: inset 0 0 18px rgba(0, 240, 255, 0.22);
+    }
+
+    .ai-launcher__text {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .ai-launcher__text small {
+      color: rgba(0, 0, 0, 0.68);
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .ai-launcher-note {
+      position: fixed;
+      right: 24px;
+      bottom: 96px;
+      z-index: 2100;
+      max-width: 280px;
+      padding: 12px 14px;
+      border: 1px solid rgba(0, 240, 255, 0.22);
+      border-radius: 16px;
+      background: rgba(10, 10, 10, 0.9);
+      color: #fff;
+      font-size: 0.9rem;
+      line-height: 1.35;
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.34);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .ai-launcher-note.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 640px) {
+      .ai-launcher {
+        right: 14px;
+        bottom: 14px;
+        min-height: 56px;
+        padding: 0 16px 0 12px;
+      }
+
+      .ai-launcher__text small {
+        display: none;
+      }
+
+      .ai-launcher-note {
+        right: 14px;
+        bottom: 82px;
+        max-width: calc(100vw - 28px);
+      }
+    }
+  
   </style>
 </head>
 <body>
@@ -184,38 +421,47 @@
 
   <!-- Benefits -->
   <section class="chart-section">
-    <div class="container">
-      <h2 class="chart-title">📈 Курс Bitcoin в реальном времени</h2>
-      <div class="chart-box">
-        <div class="tv-chart">
-          <div class="tradingview-widget-container" style="height:100%;width:100%">
-            <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-            {
-              "allow_symbol_change": false,
-              "calendar": false,
-              "details": false,
-              "hide_side_toolbar": true,
-              "hide_top_toolbar": false,
-              "hide_legend": false,
-              "hide_volume": false,
-              "interval": "D",
-              "locale": "ru",
-              "save_image": false,
-              "style": "1",
-              "symbol": "BINANCE:BTCUSDT",
-              "theme": "dark",
-              "timezone": "Europe/Kiev",
-              "backgroundColor": "#1a1a1a",
-              "gridColor": "rgba(255,255,255,0.05)",
-              "autosize": true
-            }
-            </script>
-          </div>
+  <div class="container">
+
+    <h2 class="chart-title">
+      📈 Курс Bitcoin в реальном времени
+    </h2>
+
+    <div class="chart-box">
+      <div class="tv-chart">
+        <div class="tradingview-widget-container" style="height:100%;width:100%">
+          <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+
+          <script
+            type="text/javascript"
+            src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js"
+            async>
+          {
+            "allow_symbol_change": false,
+            "calendar": false,
+            "details": false,
+            "hide_side_toolbar": true,
+            "hide_top_toolbar": false,
+            "hide_legend": false,
+            "hide_volume": false,
+            "interval": "D",
+            "locale": "ru",
+            "save_image": false,
+            "style": "1",
+            "symbol": "BINANCE:BTCUSDT",
+            "theme": "dark",
+            "timezone": "Europe/Kiev",
+            "backgroundColor": "#1a1a1a",
+            "gridColor": "rgba(255,255,255,0.05)",
+            "autosize": true
+          }
+          </script>
         </div>
       </div>
     </div>
-  </section>
+
+  </div>
+</section>
 
   <section class="section features">
     <div class="container">
@@ -240,12 +486,72 @@
     </div>
   </section>
 
-  <!-- Testimonials, FAQ, Final CTA, Footer и Profile Modal остаются как у тебя были -->
+  <!-- Testimonials -->
+  <section class="section testimonials">
+    <div class="container">
+      <h2 style="text-align:center; font-size:2.8rem; margin-bottom:3rem;">Отзывы учеников</h2>
+      <div class="grid">
+        <div class="testimonial">
+          <p>"За 3 недели слил 2400$ на арбитраже. Лучшее вложение в себя за последний год."</p>
+          <strong>— @CryptoVova</strong>
+        </div>
+        <div class="testimonial">
+          <p>"Простым языком объяснили, как сливать депозит. Вложила 5 тысяч долларов, вывела 15 тысяч гривен. Спасибо."</p>
+          <strong>— Анна К.</strong>
+        </div>
+        <div class="testimonial">
+          <p>"Сообщество — это космос. Каждый день новые проблемы. Развелся с жинкой."</p>
+          <strong>— MaxTrade</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" style="background:#0a0a0a;">
+    <div class="container">
+      <h2 style="text-align:center; font-size:2.8rem; margin-bottom:3rem;">Часто задаваемые вопросы</h2>
+      <div style="max-width:700px; margin:0 auto;">
+        <details style="margin:1.2rem 0; background:rgba(26,26,26,0.6); padding:1.5rem; border-radius:16px; border:1px solid #333;">
+          <summary style="font-weight:600; cursor:pointer;">Для новичков ли курс?</summary>
+          <p style="margin-top:1rem; opacity:0.9;">Да. Начинаем с нуля: от установки кошелька до первых прибыльных сделок.</p>
+        </details>
+        <details style="margin:1.2rem 0; background:rgba(26,26,26,0.6); padding:1.5rem; border-radius:16px; border:1px solid #333;">
+          <summary style="font-weight:600; cursor:pointer;">Сколько времени нужно уделять?</summary>
+          <p style="margin-top:1rem; opacity:0.9;">От 30 минут в день. Есть ускоренный и комфортный формат.</p>
+        </details>
+        <details style="margin:1.2rem 0; background:rgba(26,26,26,0.6); padding:1.5rem; border-radius:16px; border:1px solid #333;">
+          <summary style="font-weight:600; cursor:pointer;">Есть ли поддержка после покупки?</summary>
+          <p style="margin-top:1rem; opacity:0.9;">Пожизненный доступ к обновлениям + чат с поддержкой.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="section" style="text-align:center; background:linear-gradient(135deg, #1a0033, #0a0a0a);">
+    <div class="container">
+      <h2 style="font-size:3rem; margin-bottom:1.5rem;">Готов изменить свою финансовую жизнь?</h2>
+      <a href="https://t.me/FredLegends" target="_blank" class="btn" style="font-size:1.4rem; padding:1.3em 3em;">
+        <i class="fas fa-bolt"></i> Забрать курс со скидкой
+      </a>
+      <p style="margin-top:2rem; opacity:0.7;">Осталось мест: <strong>47 из 100</strong></p>
+    </div>
+  </section>
 
   <footer style="text-align:center; padding:3rem 20px; background:#000; font-size:0.9rem; color:#666;">
     © 2026 FredLegends • Все права пока что не защищены<br>
     <a href="https://t.me/ArbitrationCriptobt" style="color:var(--primary);">Поддержка</a>
   </footer>
+
+  <button class="ai-launcher" id="aiLauncher" type="button" aria-label="Открыть ИИ помощника">
+    <span class="ai-launcher__icon"><i class="fas fa-robot"></i></span>
+    <span class="ai-launcher__text">
+      <span>ИИ помощник</span>
+      <small>Задать вопрос</small>
+    </span>
+  </button>
+  <div class="ai-launcher-note" id="aiLauncherNote">Открываю ассистента...</div>
 
   <!-- Profile Modal -->
   <div class="modal" id="profileModal">
@@ -262,7 +568,7 @@
   </div>
 
   <script>
-    // Все функции
+    // Floating coins
     function createFloatingCoins() {
       const container = document.getElementById('floating');
       for (let i = 0; i < 12; i++) {
@@ -276,11 +582,13 @@
       }
     }
 
+    // Theme toggle
     function toggleTheme() {
       document.documentElement.style.setProperty('--primary', 
         document.documentElement.style.getPropertyValue('--primary') === '#00f0ff' ? '#ff00aa' : '#00f0ff');
     }
 
+    // Profile system
     let user = JSON.parse(localStorage.getItem('user')) || null;
 
     function toggleProfile() {
@@ -386,6 +694,7 @@
     }
 
     function confetti() {
+      // Simple confetti using canvas or DOM (using previous logic)
       for (let i = 0; i < 80; i++) {
         setTimeout(() => {
           const c = document.createElement('div');
@@ -411,11 +720,12 @@
       }
     }
 
+    // Init
     window.onload = () => {
       createFloatingCoins();
       renderProfile();
-      console.log('%c✅ Looma AI ассистент успешно загружен', 'color:#00f0ff; font-weight:600');
       
+      // Fake urgency
       setInterval(() => {
         const count = document.querySelector('strong');
         if (count) {
@@ -424,14 +734,81 @@
         }
       }, 45000);
     };
-   // Принудительная инициализация Looma
-setTimeout(() => {
-  if (typeof Looma !== 'undefined') {
-    console.log('Looma initialized');
-  } else {
-    console.warn('Looma not found after 2 seconds');
-  }
-}, 2000);
-   </script>
+  </script>
+  <!-- Looma AI Assistant Widget -->
+  <script>
+    function loadLoomaWidget() {
+      if (document.querySelector('script[src*="widget.looma.chat/loader.js"]')) return;
+      var s = document.createElement('script');
+      s.defer = true;
+      s.src = 'https://widget.looma.chat/loader.js?token=15af3244d1bfdf912fca27d675f554e5';
+      if (document.head) document.head.appendChild(s);
+    }
+
+    function showAiLauncherNote(text) {
+      var note = document.getElementById('aiLauncherNote');
+      if (!note) return;
+      note.textContent = text;
+      note.classList.add('show');
+      clearTimeout(window.aiLauncherNoteTimer);
+      window.aiLauncherNoteTimer = setTimeout(function() {
+        note.classList.remove('show');
+      }, 2800);
+    }
+
+    function openLoomaWidget() {
+      loadLoomaWidget();
+      showAiLauncherNote('Открываю ассистента...');
+
+      var openers = [
+        function() { return window.Looma && window.Looma.open && window.Looma.open(); },
+        function() { return window.looma && window.looma.open && window.looma.open(); },
+        function() { return window.LoomaWidget && window.LoomaWidget.open && window.LoomaWidget.open(); },
+        function() { return window.loomaWidget && window.loomaWidget.open && window.loomaWidget.open(); }
+      ];
+
+      for (var i = 0; i < openers.length; i++) {
+        try {
+          if (openers[i]()) return true;
+        } catch (e) {}
+      }
+
+      var candidates = Array.from(document.querySelectorAll('button, [role="button"], iframe, [class*="looma"], [id*="looma"]'));
+      var target = candidates.find(function(el) {
+        var text = (el.textContent || '').toLowerCase();
+        var id = (el.id || '').toLowerCase();
+        var cls = (el.className || '').toString().toLowerCase();
+        var src = (el.getAttribute && el.getAttribute('src') || '').toLowerCase();
+        return id.includes('looma') || cls.includes('looma') || src.includes('looma') || text.includes('chat') || text.includes('чат');
+      });
+
+      if (target && target !== document.getElementById('aiLauncher')) {
+        if (target.tagName === 'IFRAME') {
+          target.style.display = 'block';
+          target.style.opacity = '1';
+          target.style.visibility = 'visible';
+        } else {
+          target.click();
+        }
+        return true;
+      }
+
+      return false;
+    }
+
+    loadLoomaWidget();
+
+    document.getElementById('aiLauncher').addEventListener('click', function() {
+      if (openLoomaWidget()) return;
+      setTimeout(function() {
+        if (!openLoomaWidget()) {
+          showAiLauncherNote('Ассистент загружается. Если чат не открылся, проверь интернет или блокировщик рекламы.');
+        }
+      }, 1200);
+    });
+  </script>
+  <!-- End Looma AI Assistant Widget -->
+
 </body>
 </html>
+
