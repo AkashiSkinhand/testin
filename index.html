@@ -249,64 +249,6 @@
       0% { transform: translateY(100vh) rotate(0deg); }
       100% { transform: translateY(-100vh) rotate(720deg); }
     }
-    /* Looma AI assistant: styled to match the neon course design */
-    iframe[src*="looma.chat"],
-    iframe[src*="widget.looma.chat"],
-    [id*="looma"],
-    [class*="looma"] {
-      font-family: 'Inter', Arial, sans-serif !important;
-    }
-
-    iframe[src*="looma.chat"],
-    iframe[src*="widget.looma.chat"] {
-      border-radius: 22px !important;
-      filter: drop-shadow(0 18px 36px rgba(0, 240, 255, 0.22)) drop-shadow(0 0 18px rgba(255, 0, 170, 0.16));
-    }
-
-    [id*="looma"] button,
-    [class*="looma"] button,
-    [id*="looma"] [role="button"],
-    [class*="looma"] [role="button"] {
-      border: 1px solid rgba(0, 240, 255, 0.45) !important;
-      box-shadow: 0 12px 34px rgba(0, 240, 255, 0.24), 0 0 22px rgba(255, 0, 170, 0.16) !important;
-    }
-
-    .looma-floating-button {
-      right: 24px !important;
-      bottom: 24px !important;
-      margin-right: 0 !important;
-      margin-bottom: 0 !important;
-      padding: 0 !important;
-      width: 64px !important;
-      height: 64px !important;
-      border-radius: 50% !important;
-      border: 1px solid rgba(0, 240, 255, 0.48) !important;
-      background: linear-gradient(135deg, rgba(0, 240, 255, 0.96), rgba(255, 0, 170, 0.92)) !important;
-      box-shadow: 0 18px 42px rgba(0, 240, 255, 0.28), 0 0 28px rgba(255, 0, 170, 0.24) !important;
-      z-index: 2100 !important;
-    }
-
-    .looma-floating-button:hover {
-      transform: translateY(-5px) scale(1.04) !important;
-      box-shadow: 0 24px 54px rgba(0, 240, 255, 0.4), 0 0 38px rgba(255, 0, 170, 0.34) !important;
-    }
-
-    @media (max-width: 640px) {
-      iframe[src*="looma.chat"],
-      iframe[src*="widget.looma.chat"] {
-        max-width: calc(100vw - 24px) !important;
-        max-height: calc(100vh - 24px) !important;
-        border-radius: 18px !important;
-      }
-
-      .looma-floating-button {
-        right: 14px !important;
-        bottom: 14px !important;
-        width: 58px !important;
-        height: 58px !important;
-      }
-    }
-
     .ai-launcher {
       position: fixed;
       right: 24px;
@@ -400,8 +342,18 @@
         max-width: calc(100vw - 28px);
       }
     }
-  
+
   </style>
+  <!-- Looma Widget Code -->
+  <script>
+  (function(d) {
+      var s = d.createElement('script');
+      s.defer = true;
+      s.src = 'https://widget.looma.chat/loader.js?token=15af3244d1bfdf912fca27d675f554e5';
+      if (d.head) d.head.appendChild(s);
+  })(document);
+  </script>
+  <!-- End Looma Widget Code -->
 </head>
 <body>
   <!-- Navigation -->
@@ -570,7 +522,6 @@
     © 2026 FredLegends • Все права пока что не защищены<br>
     <a href="https://t.me/ArbitrationCriptobt" style="color:var(--primary);">Поддержка</a>
   </footer>
-
   <button class="ai-launcher looma-inline-button" id="aiLauncher" type="button" aria-label="Открыть ИИ помощника">
     <span class="ai-launcher__icon"><i class="fas fa-robot"></i></span>
     <span class="ai-launcher__text">
@@ -579,6 +530,7 @@
     </span>
   </button>
   <div class="ai-launcher-note" id="aiLauncherNote">Открываю ассистента...</div>
+
 
   <!-- Profile Modal -->
   <div class="modal" id="profileModal">
@@ -762,22 +714,22 @@
       }, 45000);
     };
   </script>
-  <!-- Looma AI Assistant Widget -->
   <script>
-    var loomaToken = '15af3244d1bfdf912fca27d675f554e5';
+    document.addEventListener('DOMContentLoaded', function() {
+      var launcher = document.getElementById('aiLauncher');
+      var note = document.getElementById('aiLauncherNote');
+      if (!launcher || !note) return;
 
-    function loadLoomaWidget() {
-      if (document.querySelector('script[src*="widget.looma.chat/loader.js"]')) return;
-      var s = document.createElement('script');
-      s.defer = true;
-      s.src = 'https://widget.looma.chat/loader.js?token=' + loomaToken;
-      if (document.head) document.head.appendChild(s);
-    }
-
-    loadLoomaWidget();
+      launcher.addEventListener('click', function() {
+        note.textContent = 'Открываю ассистента...';
+        note.classList.add('show');
+        clearTimeout(window.aiLauncherNoteTimer);
+        window.aiLauncherNoteTimer = setTimeout(function() {
+          note.classList.remove('show');
+        }, 2600);
+      });
+    });
   </script>
-  <!-- End Looma AI Assistant Widget -->
 
 </body>
 </html>
-
