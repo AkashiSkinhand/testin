@@ -324,6 +324,62 @@
       transform: translateY(0);
     }
 
+    .ai-chat-panel {
+      position: fixed;
+      right: 24px;
+      bottom: 104px;
+      z-index: 2200;
+      width: min(390px, calc(100vw - 28px));
+      height: min(640px, calc(100vh - 132px));
+      border: 1px solid rgba(0, 240, 255, 0.28);
+      border-radius: 24px;
+      overflow: hidden;
+      background: rgba(10, 10, 10, 0.96);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.58), 0 0 42px rgba(0, 240, 255, 0.22);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(16px) scale(0.98);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .ai-chat-panel.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    .ai-chat-panel__bar {
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px 0 18px;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.14);
+      background: linear-gradient(90deg, rgba(0, 240, 255, 0.13), rgba(255, 0, 170, 0.12));
+      color: #fff;
+      font-weight: 800;
+    }
+
+    .ai-chat-panel__close {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .ai-chat-panel iframe {
+      width: 100%;
+      height: calc(100% - 54px);
+      border: 0;
+      background: #fff;
+    }
+
     @media (max-width: 640px) {
       .ai-launcher {
         right: 14px;
@@ -340,6 +396,14 @@
         right: 14px;
         bottom: 82px;
         max-width: calc(100vw - 28px);
+      }
+
+      .ai-chat-panel {
+        right: 14px;
+        bottom: 82px;
+        width: calc(100vw - 28px);
+        height: calc(100vh - 104px);
+        border-radius: 18px;
       }
     }
 
@@ -522,7 +586,7 @@
     © 2026 FredLegends • Все права пока что не защищены<br>
     <a href="https://t.me/ArbitrationCriptobt" style="color:var(--primary);">Поддержка</a>
   </footer>
-  <button class="ai-launcher looma-inline-button" id="aiLauncher" type="button" aria-label="Открыть ИИ помощника">
+  <button class="ai-launcher" id="aiLauncher" type="button" aria-label="Открыть ИИ помощника">
     <span class="ai-launcher__icon"><i class="fas fa-robot"></i></span>
     <span class="ai-launcher__text">
       <span>ИИ помощник</span>
@@ -530,6 +594,19 @@
     </span>
   </button>
   <div class="ai-launcher-note" id="aiLauncherNote">Открываю ассистента...</div>
+
+  <div class="ai-chat-panel" id="aiChatPanel" aria-hidden="true">
+    <div class="ai-chat-panel__bar">
+      <span>ИИ помощник</span>
+      <button class="ai-chat-panel__close" id="aiChatClose" type="button" aria-label="Закрыть чат">×</button>
+    </div>
+    <iframe
+      title="Looma AI Assistant"
+      src="https://widget.looma.chat/chat.html?token=15af3244d1bfdf912fca27d675f554e5"
+      loading="lazy"
+      allow="clipboard-write; microphone">
+    </iframe>
+  </div>
 
 
   <!-- Profile Modal -->
@@ -718,15 +795,32 @@
     document.addEventListener('DOMContentLoaded', function() {
       var launcher = document.getElementById('aiLauncher');
       var note = document.getElementById('aiLauncherNote');
-      if (!launcher || !note) return;
+      var panel = document.getElementById('aiChatPanel');
+      var close = document.getElementById('aiChatClose');
+      if (!launcher || !note || !panel || !close) return;
 
       launcher.addEventListener('click', function() {
         note.textContent = 'Открываю ассистента...';
         note.classList.add('show');
+        panel.classList.add('open');
+        panel.setAttribute('aria-hidden', 'false');
+
         clearTimeout(window.aiLauncherNoteTimer);
         window.aiLauncherNoteTimer = setTimeout(function() {
           note.classList.remove('show');
         }, 2600);
+      });
+
+      close.addEventListener('click', function() {
+        panel.classList.remove('open');
+        panel.setAttribute('aria-hidden', 'true');
+      });
+
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+          panel.classList.remove('open');
+          panel.setAttribute('aria-hidden', 'true');
+        }
       });
     });
   </script>
